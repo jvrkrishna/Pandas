@@ -34,6 +34,7 @@ def parse_csv():
         reader = csv.reader(f)
         next(reader, None)
         for row in reader:
+            print("DEBUG ROW:", row)
             __parsed_rows.append({
                 'date':  row[__index['date']],
                 'temperature': row[__index['temperature']],
@@ -67,10 +68,10 @@ def get_average_wind_speed():
     total = 0
     count = 0
     for row in __parsed_rows:
-        speed = 0 if row['WindSpeedMPH']=='' else int(row['WindSpeedMPH'])
+        speed = 0 if row['WindSpeedMPH'] == '' else int(row['WindSpeedMPH'])
         total += speed
-        count+=1
-    return total/count
+        count += 1
+    return total / count if count > 0 else 0  # ✅ Safe division
 
 if __name__=="__main__":
     parse_csv()
